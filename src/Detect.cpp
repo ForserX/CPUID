@@ -147,10 +147,6 @@ unsigned int query_processor_info(processor_info* pinfo)
 	}
 	//End
 
-
-	if (pinfo->isAmd)
-	//
-
 	if (f_1_ECX[0])            pinfo->features |= static_cast<unsigned>(CPUFeature::SSE3);
 	if (f_1_ECX[9])            pinfo->features |= static_cast<unsigned>(CPUFeature::SSSE3);
 	if (f_1_ECX[19])           pinfo->features |= static_cast<unsigned>(CPUFeature::SSE41);
