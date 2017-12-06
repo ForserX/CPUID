@@ -1,27 +1,27 @@
 #pragma once
 
-enum class CPUFeature : unsigned 
+enum class CPUFeature: unsigned
 {
-	MMX		= 0x0001,
-	MWait,
-	HT,
+	MMX				= 0x0001,
+	MWait			= 0x0002,
+	HT				= 0x0004,
 
-	SSE,
-	SSE2,
-	SSE3,
-	SSSE3,
-	SSE41,
-	SSE42,
-	
-	AVX,
-	AVX2,
-	AVX512F,
-	AVX512PF,
-	AVX512ER,
-	AVX512CD,
+	SSE				= 0x0008,
+	SSE2			= 0x0010,
+	SSE3			= 0x0020,
+	SSSE3			= 0x0030,
+	SSE41			= 0x0040,
+	SSE42			= 0x0050,
 
-	AMD_3DNow,
-	AMD_3DNowExt
+	AVX				= 0x0060,
+	AVX2			= 0x0070,
+	AVX512F			= 0x0080,
+	AVX512PF		= 0x0090,
+	AVX512ER		= 0x0100,
+	AVX512CD		= 0x0200,
+
+	AMD_3DNow		= 0x0300,
+	AMD_3DNowExt	= 0x0400
 };
 
 struct processor_info 

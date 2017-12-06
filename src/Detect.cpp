@@ -62,6 +62,7 @@ unsigned int query_processor_info(processor_info* pinfo)
 
 	std::bitset<32> f_1_ECX;
 	std::bitset<32> f_1_EDX;
+	std::bitset<32> f_1_EBX;
 	std::bitset<32> f_81_EDX;
 
 	std::vector<std::array<int, 4>> data;
@@ -91,6 +92,11 @@ unsigned int query_processor_info(processor_info* pinfo)
 	{
 		f_1_ECX = data[1][2];
 		f_1_EDX = data[1][3];
+	}
+
+	if (nIds >= 7)
+	{
+		f_1_EBX = data[7][1];
 	}
 
 	// load bitset with flags for function 0x00000007
@@ -141,6 +147,11 @@ unsigned int query_processor_info(processor_info* pinfo)
 
 	//Added sv3nk: AVX
 	if (f_1_ECX[28])           pinfo->features |= static_cast<unsigned>(CPUFeature::AVX);
+	if (f_1_EBX[5])			   pinfo->features |= static_cast<unsigned>(CPUFeature::AVX2);
+	if (f_1_EBX[16])           pinfo->features |= static_cast<unsigned>(CPUFeature::AVX512F);
+	if (f_1_EBX[26])           pinfo->features |= static_cast<unsigned>(CPUFeature::AVX512PF);
+	if (f_1_EBX[27])           pinfo->features |= static_cast<unsigned>(CPUFeature::AVX512ER);
+	if (f_1_EBX[28])           pinfo->features |= static_cast<unsigned>(CPUFeature::AVX512CD);
 	//End
 	__cpuid(cpui.data(), 1);
 
@@ -196,5 +207,5 @@ unsigned int query_processor_info(processor_info* pinfo)
 
 processor_info::processor_info()
 {
-	query_processor_info(&*this);
+	features = query_processor_info(&*this);
 }
