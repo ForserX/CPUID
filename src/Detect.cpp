@@ -64,6 +64,7 @@ unsigned int query_processor_info(processor_info* pinfo)
 	std::bitset<32> f_1_EDX;
 	std::bitset<32> f_1_EBX;
 	std::bitset<32> f_81_EDX;
+	std::bitset<32> f_81_ECX;
 
 	std::vector<std::array<int, 4>> data;
 	std::array<int, 4> cpui;
@@ -111,8 +112,10 @@ unsigned int query_processor_info(processor_info* pinfo)
 	}
 	// load bitset with flags for function 0x80000001
 	if (nExIds_ >= 0x80000001)
+	{
+		f_81_ECX = data[1][2];
 		f_81_EDX = data[1][3];
-
+	}
 	memset(pinfo->modelName, 0, sizeof(pinfo->modelName));
 
 	// Interpret CPU brand string if reported
@@ -132,13 +135,21 @@ unsigned int query_processor_info(processor_info* pinfo)
 	if (f_1_EDX[25])           pinfo->features |= static_cast<unsigned>(CPUFeature::SSE);
 	if (f_1_EDX[26])           pinfo->features |= static_cast<unsigned>(CPUFeature::SSE2);
 
-	//Added sv3nk: 3DNow! EXT
+	//Added sv3nk: AMD Features
 	if (pinfo->isAmd)
-		if (f_81_EDX[30])
-			pinfo->features |= static_cast<unsigned>(CPUFeature::AMD_3DNowExt);
-		else if (f_81_EDX[31])
-			pinfo->features |= static_cast<unsigned>(CPUFeature::AMD_3DNow);
+	{
+		// 3DNow!
+		if (f_81_EDX[31])		pinfo->features |= static_cast<unsigned>(CPUFeature::AMD_3DNow);
+		if (f_81_EDX[30])		pinfo->features |= static_cast<unsigned>(CPUFeature::AMD_3DNowExt);
+		// SSE & MMX
+		if (f_1_ECX[6])			pinfo->features |= static_cast<unsigned>(CPUFeature::SSE4a);
+		if (f_81_EDX[22])		pinfo->features |= static_cast<unsigned>(CPUFeature::MMXExt);
+	}
 	//End
+
+
+	if (pinfo->isAmd)
+	//
 
 	if (f_1_ECX[0])            pinfo->features |= static_cast<unsigned>(CPUFeature::SSE3);
 	if (f_1_ECX[9])            pinfo->features |= static_cast<unsigned>(CPUFeature::SSSE3);

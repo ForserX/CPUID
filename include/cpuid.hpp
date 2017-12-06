@@ -3,6 +3,7 @@
 enum class CPUFeature: unsigned
 {
 	MMX				= 0x0001,
+	MMXExt			= 0x0600,
 	MWait			= 0x0002,
 	HT				= 0x0004,
 
@@ -11,6 +12,7 @@ enum class CPUFeature: unsigned
 	SSE3			= 0x0020,
 	SSSE3			= 0x0030,
 	SSE41			= 0x0040,
+	SSE4a			= 0x0500,
 	SSE42			= 0x0050,
 
 	AVX				= 0x0060,
