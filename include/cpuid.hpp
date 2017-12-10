@@ -2,28 +2,28 @@
 
 enum class CPUFeature: unsigned
 {
-	MMX				= 0x0001,
-	MMXExt			= 0x0600,
-	MWait			= 0x0002,
-	HT				= 0x0004,
+	MMX				= 1 << 0,
+	MMXExt			= 1 << 1,
+	MWait			= 1 << 2,
+	HT				= 1 << 3,
 
-	SSE				= 0x0008,
-	SSE2			= 0x0010,
-	SSE3			= 0x0020,
-	SSSE3			= 0x0030,
-	SSE41			= 0x0040,
-	SSE4a			= 0x0500,
-	SSE42			= 0x0050,
+	SSE				= 1 << 4,
+	SSE2			= 1 << 5,
+	SSE3			= 1 << 6,
+	SSSE3			= 1 << 7,
+	SSE41			= 1 << 8,
+	SSE4a			= 1 << 9,
+	SSE42			= 1 << 10,
 
-	AVX				= 0x0060,
-	AVX2			= 0x0070,
-	AVX512F			= 0x0080,
-	AVX512PF		= 0x0090,
-	AVX512ER		= 0x0100,
-	AVX512CD		= 0x0200,
+	AVX				= 1 << 11,
+	AVX2			= 1 << 12,
+	AVX512F			= 1 << 13,
+	AVX512PF		= 1 << 14,
+	AVX512ER		= 1 << 15,
+	AVX512CD		= 1 << 16,
 
-	AMD_3DNow		= 0x0300,
-	AMD_3DNowExt	= 0x0400
+	AMD_3DNow		= 1 << 17,
+	AMD_3DNowExt	= 1 << 18
 };
 
 struct processor_info 
